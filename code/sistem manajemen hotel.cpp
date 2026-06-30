@@ -31,6 +31,7 @@ void menuKamar();
 
 void tambahKamar();
 void lihatKamar();
+void cariKamar();
 
 // =====================================
 // MAIN PROGRAM
@@ -121,7 +122,7 @@ void menuKamar() {
                 break;
 
             case 3:
-                cout << "\n[Fitur Cari Kamar Belum Dibuat]";
+                cariKamar();
                 break;
 
             case 4:
@@ -194,4 +195,40 @@ void lihatKamar() {
     }
 
     cout << "\n================================================================================\n";
+}
+
+// =====================================
+// CARI KAMAR
+// =====================================
+void cariKamar() {
+
+    int nomor;
+    bool ditemukan = false;
+
+    cout << "\n===== CARI KAMAR =====";
+
+    cout << "\nMasukkan Nomor Kamar : ";
+    cin >> nomor;
+
+    for (int i = 0; i < jumlahKamar; i++) {
+
+        if (kamar[i].nomor == nomor) {
+
+            cout << "\n\nData Ditemukan";
+
+            cout << "\nNomor Kamar : " << kamar[i].nomor;
+            cout << "\nTipe        : " << kamar[i].tipe;
+            cout << "\nHarga       : " << kamar[i].harga;
+            cout << "\nStatus      : " << kamar[i].status;
+
+            ditemukan = true;
+            break;
+        }
+    }
+
+    if (!ditemukan) {
+        cout << "\nData kamar tidak ditemukan.";
+    }
+
+    cout << endl;
 }
