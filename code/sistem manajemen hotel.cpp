@@ -30,6 +30,7 @@ int jumlahKamar = 0;
 void menuKamar();
 
 void tambahKamar();
+void lihatKamar();
 
 // =====================================
 // MAIN PROGRAM
@@ -116,7 +117,7 @@ void menuKamar() {
                 break;
 
             case 2:
-                cout << "\n[Fitur Lihat Daftar Kamar Belum Dibuat]";
+                lihatKamar();
                 break;
 
             case 3:
@@ -163,4 +164,34 @@ void tambahKamar() {
 
     cout << "\nData kamar berhasil ditambahkan.";
     cout << "\nStatus Awal : Tersedia\n";
+}
+
+// =====================================
+// LIHAT DAFTAR KAMAR
+// =====================================
+void lihatKamar() {
+
+    cout << "\n===== DAFTAR KAMAR =====";
+
+    if(jumlahKamar == 0) {
+
+        cout << "\n\nBelum ada data kamar.\n";
+        return;
+    }
+
+    cout << "\n================================================================================";
+    cout << "\nNo\tNo. Kamar\tTipe\t\tHarga\t\tStatus";
+    cout << "\n================================================================================";
+
+    for(int i = 0; i < jumlahKamar; i++) {
+
+        cout << "\n"
+             << i + 1 << "\t"
+             << kamar[i].nomor << "\t\t"
+             << kamar[i].tipe << "\t\t"
+             << kamar[i].harga << "\t\t"
+             << kamar[i].status;
+    }
+
+    cout << "\n================================================================================\n";
 }
