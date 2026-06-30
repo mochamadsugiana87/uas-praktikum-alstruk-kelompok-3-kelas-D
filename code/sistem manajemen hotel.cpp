@@ -32,6 +32,7 @@ void menuKamar();
 void tambahKamar();
 void lihatKamar();
 void cariKamar();
+void ubahStatusKamar();
 
 // =====================================
 // MAIN PROGRAM
@@ -126,7 +127,7 @@ void menuKamar() {
                 break;
 
             case 4:
-                cout << "\n[Fitur Ubah Status Kamar Belum Dibuat]";
+                ubahStatusKamar();
                 break;
 
             case 5:
@@ -222,6 +223,89 @@ void cariKamar() {
             cout << "\nStatus      : " << kamar[i].status;
 
             ditemukan = true;
+            break;
+        }
+    }
+
+    if (!ditemukan) {
+        cout << "\nData kamar tidak ditemukan.";
+    }
+
+    cout << endl;
+}
+
+// =====================================
+// UBAH STATUS KAMAR
+// =====================================
+void ubahStatusKamar() {
+
+    int nomor;
+    bool ditemukan = false;
+
+    cout << "\n===== UBAH STATUS KAMAR =====\n";
+    
+    // Tampilkan daftar kamar terlebih dahulu
+	lihatKamar();
+
+    cout << "\nMasukkan Nomor Kamar : ";
+    cin >> nomor;
+
+    for (int i = 0; i < jumlahKamar; i++) {
+
+        if (kamar[i].nomor == nomor) {
+
+            ditemukan = true;
+
+            int pilihanStatus;
+            
+            cout << "\n\nData Ditemukan";
+
+			cout << "\nNomor Kamar : "
+			     << kamar[i].nomor;
+			
+			cout << "\nTipe        : "
+			     << kamar[i].tipe;
+			
+			cout << "\nHarga       : "
+			     << kamar[i].harga;
+
+            cout << "\nStatus Saat Ini : "
+                 << kamar[i].status;
+
+			cout << "\n\nPilih Status Baru";
+			
+            cout << "\n\n1. Tersedia";
+            cout << "\n2. Booking";
+            cout << "\n3. Terisi";
+            cout << "\n4. Maintenance";
+
+            cout << "\n\nPilihan : ";
+            cin >> pilihanStatus;
+
+            switch (pilihanStatus) {
+
+                case 1:
+                    kamar[i].status = "Tersedia";
+                    break;
+
+                case 2:
+                    kamar[i].status = "Booking";
+                    break;
+
+                case 3:
+                    kamar[i].status = "Terisi";
+                    break;
+                    
+                case 4:
+                kamar[i].status = "Maintenance";
+                break;
+
+                default:
+                    cout << "\nPilihan tidak valid.";
+                    return;
+            }
+
+            cout << "\nStatus berhasil diubah.";
             break;
         }
     }
