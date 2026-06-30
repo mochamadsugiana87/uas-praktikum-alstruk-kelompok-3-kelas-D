@@ -35,6 +35,9 @@ void cariKamar();
 void ubahStatusKamar();
 void hapusKamar();
 
+// MENU RESERVASI
+void menuReservasi();
+
 // =====================================
 // MAIN PROGRAM
 // =====================================
@@ -64,7 +67,7 @@ int main() {
                 break;
 
             case 2:
-               	cout << "\n[Fitur Reservasi Belum Dibuat]";
+               	menuReservasi();
                 break;
 
             case 3:
@@ -398,4 +401,52 @@ void hapusKamar() {
     }
 
     cout << endl;
+}
+
+// =====================================
+// MENU RESERVASI
+// =====================================
+void menuReservasi() {
+
+    int pilih;
+
+    do {
+
+        cout << "\n\n===== RESERVASI =====";
+
+        cout << "\n1. Tambah Reservasi";
+        cout << "\n2. Lihat Reservasi";
+        cout << "\n3. Cari Reservasi";
+        cout << "\n4. Batalkan Reservasi";
+        cout << "\n0. Kembali";
+
+        cout << "\n\nPilih Menu : ";
+        cin >> pilih;
+
+        switch(pilih) {
+
+            case 1:
+                cout << "\n Fitur tambah reservasi belum dibuat";
+                break;
+
+            case 2:
+                cout << "\n Fitur lihat reservasi belum dibuat";
+                break;
+
+            case 3:
+                cout << "\n Fitur cari reservasi belum dibuat";
+                break;
+
+            case 4:
+                cout << "\n Fitur hapus reservasi belum dibuat";
+                break;
+
+            case 0:
+                break;
+
+            default:
+                cout << "\nPilihan tidak valid!";
+        }
+
+    } while(pilih != 0);
 }
