@@ -33,6 +33,7 @@ void tambahKamar();
 void lihatKamar();
 void cariKamar();
 void ubahStatusKamar();
+void hapusKamar();
 
 // =====================================
 // MAIN PROGRAM
@@ -131,7 +132,7 @@ void menuKamar() {
                 break;
 
             case 5:
-                cout << "\n[Fitur Hapus Kamar Belum Dibuat]";
+                hapusKamar();
                 break;
 
             case 0:
@@ -306,6 +307,88 @@ void ubahStatusKamar() {
             }
 
             cout << "\nStatus berhasil diubah.";
+            break;
+        }
+    }
+
+    if (!ditemukan) {
+        cout << "\nData kamar tidak ditemukan.";
+    }
+
+    cout << endl;
+}
+
+// =====================================
+// HAPUS KAMAR
+// =====================================
+void hapusKamar() {
+
+    int nomor;
+    bool ditemukan = false;
+
+    cout << "\n===== HAPUS KAMAR =====\n";
+    
+    // Tampilkan daftar kamar terlebih dahulu
+    lihatKamar();
+
+    cout << "\nMasukkan Nomor Kamar : ";
+    cin >> nomor;
+
+    for (int i = 0; i < jumlahKamar; i++) {
+
+        if (kamar[i].nomor == nomor) {
+
+            ditemukan = true;
+
+            // Validasi kamar sedang terisi
+            if (kamar[i].status == "Terisi") {
+            	cout << "\nData Ditemukan!\n";
+
+			    cout << "\nNomor Kamar : "
+			         << kamar[i].nomor;
+			
+			    cout << "\nTipe        : "
+			         << kamar[i].tipe;
+			
+			    cout << "\nHarga       : "
+			         << kamar[i].harga;
+			
+			    cout << "\nStatus      : "
+			         << kamar[i].status;
+
+                cout << "\n\nKamar sedang digunakan.";
+                cout << "\nData tidak dapat dihapus.\n";
+                return;
+            }
+
+            char konfirmasi;
+
+            cout << "\nNomor Kamar : "
+                 << kamar[i].nomor;
+
+            cout << "\nTipe        : "
+                 << kamar[i].tipe;
+
+            cout << "\nHarga       : "
+                 << kamar[i].harga;
+
+            cout << "\nStatus      : "
+                 << kamar[i].status;
+
+            cout << "\n\nYakin ingin menghapus? (Y/T) : ";
+            cin >> konfirmasi;
+
+            if (konfirmasi == 'Y' || konfirmasi == 'y') {
+
+                for (int j = i; j < jumlahKamar - 1; j++) {
+                    kamar[j] = kamar[j + 1];
+                }
+
+                jumlahKamar--;
+
+                cout << "\nData kamar berhasil dihapus.";
+            }
+
             break;
         }
     }
