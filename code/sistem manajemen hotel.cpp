@@ -5,11 +5,31 @@
 using namespace std;
 
 // =====================================
+// STRUCT DATA KAMAR
+// =====================================
+struct Kamar {
+    int nomor;
+    string tipe;
+    int harga;
+    string status;
+};
+
+// =====================================
+// VARIABEL GLOBAL
+// =====================================
+
+// ARRAY KAMAR
+Kamar kamar[100];
+int jumlahKamar = 0;
+
+// =====================================
 // DEKLARASI FUNCTION
 // =====================================
 
 // MENU KAMAR
 void menuKamar();
+
+void tambahKamar();
 
 // =====================================
 // MAIN PROGRAM
@@ -92,7 +112,7 @@ void menuKamar() {
         switch (pilih) {
 
             case 1:
-                cout << "\n[Fitur Tambah Kamar Belum Dibuat]";
+                tambahKamar();
                 break;
 
             case 2:
@@ -119,4 +139,28 @@ void menuKamar() {
         }
 
     } while (pilih != 0);
+}
+
+// =====================================
+// TAMBAH KAMAR
+// =====================================
+void tambahKamar() {
+
+    cout << "\n===== TAMBAH KAMAR =====";
+
+    cout << "\nNomor Kamar : ";
+    cin >> kamar[jumlahKamar].nomor;
+
+    cout << "Tipe Kamar  : ";
+    cin >> kamar[jumlahKamar].tipe;
+
+    cout << "Harga       : ";
+    cin >> kamar[jumlahKamar].harga;
+
+    kamar[jumlahKamar].status = "Tersedia";
+
+    jumlahKamar++;
+
+    cout << "\nData kamar berhasil ditambahkan.";
+    cout << "\nStatus Awal : Tersedia\n";
 }
