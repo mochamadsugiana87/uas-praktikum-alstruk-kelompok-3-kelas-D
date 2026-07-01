@@ -15,12 +15,41 @@ struct Kamar {
 };
 
 // =====================================
+// STRUCT DATA RESERVASI
+// =====================================
+struct Reservasi {
+    string idReservasi;
+    string namaTamu;
+
+    int nomorKamar;
+
+    string tanggalCheckIn;
+
+    int lamaMenginap;
+
+    string statusReservasi;
+    string statusPembayaran;
+};
+
+// =====================================
+// NODE LINKED LIST RESERVASI
+// =====================================
+struct NodeReservasi {
+    Reservasi data;
+    NodeReservasi* next;
+};
+
+// =====================================
 // VARIABEL GLOBAL
 // =====================================
 
 // ARRAY KAMAR
 Kamar kamar[100];
 int jumlahKamar = 0;
+
+// LINKED LIST RESERVASI
+NodeReservasi* headReservasi = NULL;
+int nomorReservasi = 1;
 
 // =====================================
 // DEKLARASI FUNCTION
@@ -37,6 +66,8 @@ void hapusKamar();
 
 // MENU RESERVASI
 void menuReservasi();
+
+void tambahReservasi();
 
 // =====================================
 // MAIN PROGRAM
@@ -426,7 +457,7 @@ void menuReservasi() {
         switch(pilih) {
 
             case 1:
-                cout << "\n Fitur tambah reservasi belum dibuat";
+                tambahReservasi();
                 break;
 
             case 2:
@@ -449,4 +480,151 @@ void menuReservasi() {
         }
 
     } while(pilih != 0);
+}
+
+// =====================================
+// TAMBAH RESERVASI
+// =====================================
+void tambahReservasi() {
+
+    cout << "\n===== TAMBAH RESERVASI =====\n";
+    
+    bool adaKamar = false;
+
+	cout << "\nDAFTAR KAMAR TERSEDIA";
+	
+	cout << "\n================================================================================";
+	cout << "\nNo. Kamar\tTipe\tHarga\tStatus";
+	cout << "\n================================================================================";
+	
+	for(int i = 0; i < jumlahKamar; i++) {
+	
+	    if(kamar[i].status == "Tersedia") {
+	
+	        adaKamar = true;
+	
+	        cout << "\n"
+	             << kamar[i].nomor << "\t\t"
+	             << kamar[i].tipe << "\t"
+	             << kamar[i].harga << "\t"
+	             << kamar[i].status;
+	    }
+	}
+	
+	cout << "\n================================================================================";
+	
+	// Jika tidak ada kamar tersedia
+	if(!adaKamar) {
+	    cout << "\n\nTidak ada kamar yang tersedia.\n";
+	    return;
+	}
+
+    NodeReservasi* baru = new NodeReservasi;
+
+    cin.ignore();
+
+    cout << "\nNama Tamu : ";
+    getline(cin, baru->data.namaTamu);
+
+    cout << "Nomor Kamar : ";
+    cin >> baru->data.nomorKamar;
+
+    // -------------------------
+    // Validasi Kamar
+    // -------------------------
+
+    bool kamarDitemukan = false;
+    bool kamarTersedia = false;
+    
+    int indexKamar = -1;
+
+    for(int i = 0; i < jumlahKamar; i++) {
+
+        if(kamar[i].nomor == baru->data.nomorKamar) {
+
+            kamarDitemukan = true;
+            indexKamar = i;
+
+            if(kamar[i].status == "Tersedia") {
+
+                kamarTersedia = true;
+            }
+            else {
+
+                cout << "\nStatus Kamar : "
+                     << kamar[i].status;
+
+                cout << "\nKamar tidak tersedia untuk reservasi.\n";
+
+                delete baru;
+                return;
+            }
+        }
+    }
+
+    if(!kamarDitemukan) {
+
+        cout << "\nKamar tidak ditemukan.\n";
+
+        delete baru;
+        return;
+    }
+
+    cout << "Tanggal Check-In : ";
+    cin >> baru->data.tanggalCheckIn;
+
+    cout << "Lama Menginap : ";
+    cin >> baru->data.lamaMenginap;
+    
+    char id[20];
+	sprintf(id, "RSV%d", nomorReservasi);
+	baru->data.idReservasi = id;
+	nomorReservasi++;
+
+    baru->data.statusReservasi =
+        "Menunggu";
+
+    baru->data.statusPembayaran =
+        "Belum Lunas";
+
+    baru->next = NULL;
+
+    // -------------------------
+    // Sisip di akhir linked list
+    // -------------------------
+
+    if(headReservasi == NULL) {
+
+        headReservasi = baru;
+    }
+    else {
+
+        NodeReservasi* bantu = headReservasi;
+
+        while(bantu->next != NULL) {
+
+            bantu = bantu->next;
+        }
+
+        bantu->next = baru;
+    }
+    
+    // Ubah status kamar menjadi Booking
+	kamar[indexKamar].status = "Booking";
+
+    cout << "\nReservasi Berhasil";
+
+    cout << "\nID Reservasi : "
+         << baru->data.idReservasi;
+
+    cout << "\nStatus Reservasi : "
+         << baru->data.statusReservasi;
+
+    cout << "\nStatus Pembayaran : "
+         << baru->data.statusPembayaran;
+         
+    cout << "\nStatus Kamar : "
+     	 << kamar[indexKamar].status;
+
+    cout << endl;
 }
