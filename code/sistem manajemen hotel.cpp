@@ -69,6 +69,7 @@ void menuReservasi();
 
 void tambahReservasi();
 void lihatReservasi();
+void cariReservasi();
 
 
 // =====================================
@@ -467,7 +468,7 @@ void menuReservasi() {
                 break;
 
             case 3:
-                cout << "\n Fitur cari reservasi belum dibuat";
+                cariReservasi();
                 break;
 
             case 4:
@@ -673,3 +674,55 @@ void lihatReservasi() {
 
     cout << "\n====================================================================================\n";
 }
+
+// =====================================
+// CARI RESERVASI
+// =====================================
+
+void cariReservasi() {
+
+    string id;
+
+    cout << "\n===== CARI RESERVASI =====";
+
+    cout << "\nMasukkan ID Reservasi : ";
+    cin >> id;
+
+    NodeReservasi* bantu = headReservasi;
+
+    while(bantu != NULL) {
+
+        if(bantu->data.idReservasi == id) {
+
+            cout << "\n\nData Ditemukan";
+
+            cout << "\nID Reservasi      : "
+                 << bantu->data.idReservasi;
+
+            cout << "\nNama Tamu         : "
+                 << bantu->data.namaTamu;
+
+            cout << "\nNomor Kamar       : "
+                 << bantu->data.nomorKamar;
+
+            cout << "\nTanggal Check-In  : "
+                 << bantu->data.tanggalCheckIn;
+
+            cout << "\nLama Menginap     : "
+                 << bantu->data.lamaMenginap;
+
+            cout << "\nStatus Reservasi  : "
+                 << bantu->data.statusReservasi;
+
+            cout << "\nStatus Pembayaran : "
+                 << bantu->data.statusPembayaran;
+
+            return;
+        }
+
+        bantu = bantu->next;
+    }
+
+    cout << "\nData reservasi tidak ditemukan.\n";
+}
+
