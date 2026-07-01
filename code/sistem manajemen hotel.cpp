@@ -68,6 +68,8 @@ void hapusKamar();
 void menuReservasi();
 
 void tambahReservasi();
+void lihatReservasi();
+
 
 // =====================================
 // MAIN PROGRAM
@@ -461,7 +463,7 @@ void menuReservasi() {
                 break;
 
             case 2:
-                cout << "\n Fitur lihat reservasi belum dibuat";
+                lihatReservasi();
                 break;
 
             case 3:
@@ -627,4 +629,47 @@ void tambahReservasi() {
      	 << kamar[indexKamar].status;
 
     cout << endl;
+}
+
+// =====================================
+// LIHAT RESERVASI
+// =====================================
+void lihatReservasi() {
+
+    cout << "\n===== DAFTAR RESERVASI =====\n";
+
+    if(headReservasi == NULL) {
+
+        cout << "\nBelum ada reservasi.\n";
+        return;
+    }
+
+    cout << "\n====================================================================================";
+
+    cout << "\nID\tNama\tKamar\tlama Menginap\tStatus Reservasi\tStatus Pembayaran";
+
+    cout << "\n====================================================================================";
+
+    NodeReservasi* bantu = headReservasi;
+
+    while(bantu != NULL) {
+
+        cout << "\n"
+             << bantu->data.idReservasi << "\t"
+             << bantu->data.namaTamu << "\t"
+             << bantu->data.nomorKamar << "\t"
+             << bantu->data.lamaMenginap << " hari\t\t";
+             if(bantu->data.statusReservasi == "Menunggu") {
+			    cout << bantu->data.statusReservasi << "\t\t";
+			 } else if(bantu->data.statusReservasi == "Aktif") {
+			    cout << bantu->data.statusReservasi << "\t\t\t";
+			 } else if(bantu->data.statusReservasi == "Selesai") {
+			    cout << bantu->data.statusReservasi << "\t\t";
+			 }
+             cout << bantu->data.statusPembayaran;
+
+        bantu = bantu->next;
+    }
+
+    cout << "\n====================================================================================\n";
 }
