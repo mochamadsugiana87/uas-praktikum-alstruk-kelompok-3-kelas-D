@@ -72,6 +72,9 @@ void lihatReservasi();
 void cariReservasi();
 void batalkanReservasi();
 
+// CHECK IN
+void checkIn();
+
 
 // =====================================
 // MAIN PROGRAM
@@ -106,7 +109,7 @@ int main() {
                 break;
 
             case 3:
-                cout << "\n[Fitur Check-In Belum Dibuat]";
+				checkIn();
                 break;
 
             case 4:
@@ -849,4 +852,182 @@ void batalkanReservasi() {
 
     cout << "\nData reservasi tidak ditemukan.\n";
 }
+
+// =====================================
+// CHECK IN
+// =====================================
+void checkIn() {
+
+    string id;
+    
+    cout << "\n===== CHECK-IN =====\n";
+
+	if(headReservasi == NULL) {
+	
+	    cout << "\nBelum ada reservasi.\n";
+	    return;
+	}
+	
+	bool adaMenunggu = false;
+	
+	cout << "\nDAFTAR TAMU RESERVASI";
+	
+	cout << "\n==========================================================================";
+	cout << "\nID\tNama\tKamar\tLama Menginap\tStatus Reservasi";
+	cout << "\n==========================================================================";
+	
+	NodeReservasi* tampil = headReservasi;
+	
+	while(tampil != NULL) {
+	
+	    if(tampil->data.statusReservasi == "Menunggu") {
+	
+	        adaMenunggu = true;
+	
+	        cout << "\n"
+	             << tampil->data.idReservasi << "\t"
+	             << tampil->data.namaTamu << "\t"
+	             << tampil->data.nomorKamar << "\t"
+	             << tampil->data.lamaMenginap << " Hari\t\t"
+	             << tampil->data.statusReservasi;
+	    }
+	
+	    tampil = tampil->next;
+	}
+	
+	cout << "\n==========================================================================\n";
+	
+	if(!adaMenunggu) {
+	    cout << "\n\nTidak ada reservasi yang menunggu proses Check-In.\n";
+	    return;
+	}
+
+    cout << "\nMasukkan ID Reservasi : ";
+    cin >> id;
+
+    // Cari reservasi
+    NodeReservasi* bantu = headReservasi;
+
+    while (bantu != NULL) {
+
+        if (bantu->data.idReservasi == id) {
+
+            // Sudah Check-In & Check-Out
+			if(bantu->data.statusReservasi == "Aktif") {
+			
+			    cout << "\nReservasi sudah melakukan Check-In.";
+			
+			    return;
+			} else if(bantu->data.statusReservasi == "Selesai") {
+			
+			    cout << "\nReservasi sudah selesai.";
+			
+			    cout << "\nTamu sudah melakukan Check-Out.\n";
+			
+			    return;
+			}
+
+            // Cari kamar
+            for (int i = 0; i < jumlahKamar; i++) {
+
+                if (kamar[i].nomor ==
+                    bantu->data.nomorKamar) {
+
+                    int totalBayar =
+                        kamar[i].harga *
+                        bantu->data.lamaMenginap;
+
+                    cout << "\n\nData Reservasi";
+
+                    cout << "\nNama Tamu     : "
+                         << bantu->data.namaTamu;
+
+                    cout << "\nNomor Kamar   : "
+                         << bantu->data.nomorKamar;
+
+                    cout << "\nTipe Kamar    : "
+                         << kamar[i].tipe;
+
+                    cout << "\nHarga/Hari    : "
+                         << kamar[i].harga;
+
+                    cout << "\nLama Menginap : "
+                         << bantu->data.lamaMenginap
+                         << " Hari";
+
+                    cout << "\n\nTotal Bayar   : "
+                         << totalBayar;
+
+                    // ===================
+                    // PEMBAYARAN
+                    // ===================
+
+                    int bayar;
+
+                    do {
+
+                        cout << "\n\nMasukkan Nominal Pembayaran : ";
+                        cin >> bayar;
+
+                        if (bayar < totalBayar) {
+
+                            cout << "\nPembayaran Gagal";
+
+                            cout << "\nKekurangan : "
+                                 << totalBayar - bayar;
+
+                            cout << "\nSilakan input ulang.\n";
+                        }
+
+                    } while (bayar < totalBayar);
+
+                    int kembalian =
+                        bayar - totalBayar;
+
+                    cout << "\nPembayaran Berhasil";
+
+                    cout << "\nTotal Bayar : "
+                         << totalBayar;
+
+                    cout << "\nUang Masuk  : "
+                         << bayar;
+
+                    cout << "\nKembalian   : "
+                         << kembalian;
+
+                    // ===================
+                    // UPDATE STATUS
+                    // ===================
+
+                    bantu->data.statusPembayaran =
+                        "Lunas";
+
+                    bantu->data.statusReservasi =
+                        "Aktif";
+
+                    kamar[i].status =
+                        "Terisi";
+
+                    cout << "\n\nStatus Pembayaran : "
+                         << bantu->data.statusPembayaran;
+
+                    cout << "\nStatus Reservasi  : "
+                         << bantu->data.statusReservasi;
+
+                    cout << "\nStatus Kamar      : "
+                         << kamar[i].status;
+
+                    cout << "\n\nCheck-In Berhasil\n";
+
+                    return;
+                }
+            }
+        }
+
+        bantu = bantu->next;
+    }
+
+    cout << "\nData reservasi tidak ditemukan.\n";
+}
+
 
