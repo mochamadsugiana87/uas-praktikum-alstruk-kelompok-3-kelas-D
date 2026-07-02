@@ -119,7 +119,7 @@ int main() {
                 break;
 
             case 5:
-                riwayatTransaksi();
+                 cout << "\n[Fitur Riwayat Transaksi Belum Dibuat]";
                 break;
 
             case 0:
@@ -1169,53 +1169,4 @@ void checkOut() {
     }
 
     cout << "\nData reservasi tidak ditemukan.\n";
-}
-// =====================================
-// RIWAYAT TRANSAKSI
-// =====================================
-void riwayatTransaksi() {
-
-    cout << "\n===== RIWAYAT TRANSAKSI =====";
-
-    if(headReservasi == NULL) {
-
-        cout << "\n\nBelum ada data transaksi.\n";
-        return;
-    }
-
-    bool adaRiwayat = false;
-
-    cout << "\n========================================================================================================";
-    cout << "\nID\tNama\tKamar\tCheck-In\tLama Menginap\tStatus Reservasi\tStatus Pembayaran";
-    cout << "\n========================================================================================================";
-
-    NodeReservasi* bantu = headReservasi;
-
-    while(bantu != NULL) {
-
-        if(bantu->data.statusReservasi == "Selesai") {
-
-            adaRiwayat = true;
-
-            cout << "\n"
-                 << bantu->data.idReservasi << "\t"
-                 << bantu->data.namaTamu << "\t"
-                 << bantu->data.nomorKamar << "\t"
-                 << bantu->data.tanggalCheckIn << "\t"
-                 << bantu->data.lamaMenginap << " Hari\t\t"
-                 << bantu->data.statusReservasi << "\t\t\t"
-                 << bantu->data.statusPembayaran;
-        }
-
-        bantu = bantu->next;
-    }
-
-    cout << "\n========================================================================================================";
-
-    if(!adaRiwayat) {
-
-        cout << "\n\nBelum ada riwayat transaksi.";
-    }
-
-    cout << endl;
 }
