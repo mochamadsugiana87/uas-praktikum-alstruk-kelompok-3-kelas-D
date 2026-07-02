@@ -75,6 +75,8 @@ void batalkanReservasi();
 // CHECK IN
 void checkIn();
 
+// CHECK OUT
+void checkOut();
 
 // =====================================
 // MAIN PROGRAM
@@ -113,7 +115,7 @@ int main() {
                 break;
 
             case 4:
-                cout << "\n[Fitur Check-Out Belum Dibuat]";
+                checkOut();
                 break;
 
             case 5:
@@ -1030,4 +1032,141 @@ void checkIn() {
     cout << "\nData reservasi tidak ditemukan.\n";
 }
 
+// =====================================
+// CHECK OUT
+// =====================================
+void checkOut() {
 
+    string id;
+
+    cout << "\n===== CHECK-OUT =====\n";
+
+    // -----------------------------
+    // Tampilkan reservasi yang Aktif
+    // -----------------------------
+
+    if(headReservasi == NULL) {
+
+        cout << "\nBelum ada data reservasi.\n";
+        return;
+    }
+
+    bool adaAktif = false;
+
+    cout << "\nDAFTAR TAMU MENGINAP";
+
+    cout << "\n================================================================================";
+    cout << "\nID\tNama\tKamar\tLama Menginap\tStatus Reservasi";
+    cout << "\n================================================================================";
+
+    NodeReservasi* tampil = headReservasi;
+
+    while(tampil != NULL) {
+
+        if(tampil->data.statusReservasi == "Aktif") {
+
+            adaAktif = true;
+
+            cout << "\n"
+                 << tampil->data.idReservasi << "\t"
+                 << tampil->data.namaTamu << "\t"
+                 << tampil->data.nomorKamar << "\t"
+                 << tampil->data.lamaMenginap << " Hari\t\t"
+                 << tampil->data.statusReservasi;
+        }
+
+        tampil = tampil->next;
+    }
+
+    cout << "\n================================================================================";
+
+    if(!adaAktif) {
+
+        cout << "\n\nTidak ada tamu yang sedang menginap.\n";
+        return;
+    }
+
+    // -----------------------------
+    // Input ID Reservasi
+    // -----------------------------
+
+    cout << "\n\nMasukkan ID Reservasi : ";
+    cin >> id;
+
+    NodeReservasi* bantu = headReservasi;
+
+    while(bantu != NULL) {
+
+        if(bantu->data.idReservasi == id) {
+
+            cout << "\n\nData Ditemukan";
+
+            cout << "\nID Reservasi      : "
+                 << bantu->data.idReservasi;
+
+            cout << "\nNama Tamu         : "
+                 << bantu->data.namaTamu;
+
+            cout << "\nNomor Kamar       : "
+                 << bantu->data.nomorKamar;
+
+            cout << "\nStatus Reservasi  : "
+                 << bantu->data.statusReservasi;
+
+            cout << "\nStatus Pembayaran : "
+                 << bantu->data.statusPembayaran;
+
+            // -----------------------------
+            // Validasi Status
+            // -----------------------------
+
+            if(bantu->data.statusReservasi == "Menunggu Check-In") {
+
+                cout << "\n\nTamu belum melakukan Check-In.";
+                cout << "\nCheck-Out tidak dapat dilakukan.\n";
+                return;
+            }
+
+            if(bantu->data.statusReservasi == "Selesai") {
+
+                cout << "\n\nTamu sudah melakukan Check-Out.\n";
+                return;
+            }
+
+            char konfirmasi;
+
+            cout << "\n\nYakin ingin melakukan Check-Out? (Y/T) : ";
+            cin >> konfirmasi;
+
+            if(konfirmasi == 'Y' || konfirmasi == 'y') {
+
+                // Ubah status reservasi
+                bantu->data.statusReservasi = "Selesai";
+
+                // Ubah status kamar
+                for(int i = 0; i < jumlahKamar; i++) {
+
+                    if(kamar[i].nomor ==
+                       bantu->data.nomorKamar) {
+
+                        kamar[i].status = "Tersedia";
+                        break;
+                    }
+                }
+
+                cout << "\n\nCheck-Out Berhasil";
+
+                cout << "\nStatus Reservasi : "
+                     << bantu->data.statusReservasi;
+
+                cout << "\nStatus Kamar     : Tersedia\n";
+            }
+
+            return;
+        }
+
+        bantu = bantu->next;
+    }
+
+    cout << "\nData reservasi tidak ditemukan.\n";
+}
