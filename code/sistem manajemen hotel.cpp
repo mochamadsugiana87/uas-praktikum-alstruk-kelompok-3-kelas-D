@@ -122,7 +122,7 @@ int main() {
                 break;
 
             case 5:
-                 riwayatTransaksi();
+                riwayatTransaksi();
                 break;
 
             case 0:
@@ -1173,6 +1173,7 @@ void checkOut() {
 
     cout << "\nData reservasi tidak ditemukan.\n";
 }
+
 // =====================================
 // RIWAYAT TRANSAKSI
 // =====================================
